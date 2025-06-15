@@ -16,7 +16,7 @@ services:
     runtime: image
     image:
       url: docker.io/minio/minio
-    plan: free
+    plan: starter
     startCommand: server /data --address ":9000" --console-address ":9001"
     envVars:
       - key: MINIO_ROOT_USER
