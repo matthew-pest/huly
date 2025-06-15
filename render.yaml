@@ -288,6 +288,7 @@ services:
       - key: LIVEKIT_API_SECRET
         sync: false
 
+
   - type: web
     name: huly-aibot
     runtime: image
