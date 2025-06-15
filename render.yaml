@@ -1,9 +1,65 @@
 services:
   - type: web
-    name: huly-front
-    runtime: docker
+    name: huly-nginx
+    runtime: image
     image:
-      url: hardcoreeng/front:v0.6.501
+      url: docker.io/nginx:1.21.3
+    plan: free
+    envVars:
+      - key: HTTP_BIND
+        value: 0.0.0.0
+      - key: HTTP_PORT
+        value: 80
+
+  - type: web
+    name: huly-mongodb
+    runtime: image
+    image:
+      url: docker.io/mongo:7-jammy
+    plan: free
+    envVars:
+      - key: PUID
+        value: "1000"
+      - key: PGID
+        value: "1000"
+
+  - type: web
+    name: huly-minio
+    runtime: image
+    image:
+      url: docker.io/minio/minio
+    plan: free
+    envVars:
+      - key: MINIO_ROOT_USER
+        value: minioadmin
+      - key: MINIO_ROOT_PASSWORD
+        value: minioadmin
+
+  - type: web
+    name: huly-elastic
+    runtime: image
+    image:
+      url: docker.io/elasticsearch:7.14.2
+    plan: free
+    envVars:
+      - key: ELASTICSEARCH_PORT_NUMBER
+        value: "9200"
+      - key: BITNAMI_DEBUG
+        value: "true"
+      - key: discovery.type
+        value: "single-node"
+      - key: ES_JAVA_OPTS
+        value: "-Xms1024m -Xmx1024m"
+      - key: http.cors.enabled
+        value: "true"
+      - key: http.cors.allow-origin
+        value: "http://localhost:8082"
+
+  - type: web
+    name: huly-front
+    runtime: image
+    image:
+      url: docker.io/hardcoreeng/front:v0.6.501
     plan: free
     envVars:
       - key: SERVER_PORT
@@ -28,12 +84,18 @@ services:
         value: "true"
       - key: DESKTOP_UPDATES_CHANNEL
         value: selfhost
+      - key: LIVEKIT_WS
+        sync: false
+      - key: LOVE_ENDPOINT
+        value: https://huly-love.onrender.com
+      - key: AI_URL
+        value: https://huly-aibot.onrender.com
 
   - type: web
     name: huly-account
-    runtime: docker
+    runtime: image
     image:
-      url: hardcoreeng/account:v0.6.501
+      url: docker.io/hardcoreeng/account:v0.6.501
     plan: free
     envVars:
       - key: SERVER_PORT
@@ -59,9 +121,9 @@ services:
 
   - type: web
     name: huly-transactor
-    runtime: docker
+    runtime: image
     image:
-      url: hardcoreeng/transactor:v0.6.501
+      url: docker.io/hardcoreeng/transactor:v0.6.501
     plan: free
     envVars:
       - key: SERVER_PORT
@@ -82,12 +144,16 @@ services:
         value: https://huly-fulltext.onrender.com
       - key: STATS_URL
         value: https://huly-stats.onrender.com
+      - key: MAIL_URL
+        value: https://huly-mail.onrender.com
+      - key: AI_BOT_URL
+        value: https://huly-aibot.onrender.com
 
   - type: web
     name: huly-collaborator
-    runtime: docker
+    runtime: image
     image:
-      url: hardcoreeng/collaborator:v0.6.501
+      url: docker.io/hardcoreeng/collaborator:v0.6.501
     plan: free
     envVars:
       - key: COLLABORATOR_PORT
@@ -105,9 +171,9 @@ services:
 
   - type: web
     name: huly-stats
-    runtime: docker
+    runtime: image
     image:
-      url: hardcoreeng/stats:v0.6.501
+      url: docker.io/hardcoreeng/stats:v0.6.501
     plan: free
     envVars:
       - key: PORT
@@ -117,9 +183,9 @@ services:
 
   - type: web
     name: huly-fulltext
-    runtime: docker
+    runtime: image
     image:
-      url: hardcoreeng/fulltext:v0.6.501
+      url: docker.io/hardcoreeng/fulltext:v0.6.501
     plan: free
     envVars:
       - key: SERVER_SECRET
@@ -141,9 +207,9 @@ services:
 
   - type: web
     name: huly-rekoni
-    runtime: docker
+    runtime: image
     image:
-      url: hardcoreeng/rekoni-service:v0.6.501
+      url: docker.io/hardcoreeng/rekoni-service:v0.6.501
     plan: free
     envVars:
       - key: SECRET
@@ -151,9 +217,9 @@ services:
 
   - type: web
     name: huly-mail
-    runtime: docker
+    runtime: image
     image:
-      url: hardcoreeng/mail:v0.6.501
+      url: docker.io/hardcoreeng/mail:v0.6.501
     plan: free
     envVars:
       - key: PORT
@@ -165,4 +231,88 @@ services:
       - key: SES_SECRET_KEY
         sync: false
       - key: SES_REGION
-        sync: false 
+        sync: false
+
+  - type: web
+    name: huly-workspace
+    runtime: image
+    image:
+      url: docker.io/hardcoreeng/workspace:v0.6.501
+    plan: free
+    envVars:
+      - key: SERVER_SECRET
+        sync: false
+      - key: DB_URL
+        sync: false
+      - key: MONGO_URL
+        sync: false
+      - key: TRANSACTOR_URL
+        value: wss://huly-transactor.onrender.com
+      - key: STORAGE_CONFIG
+        sync: false
+      - key: MODEL_ENABLED
+        value: "*"
+      - key: ACCOUNTS_URL
+        value: https://huly-account.onrender.com
+      - key: STATS_URL
+        value: https://huly-stats.onrender.com
+
+  - type: web
+    name: huly-love
+    runtime: image
+    image:
+      url: docker.io/hardcoreeng/love:v0.6.501
+    plan: free
+    envVars:
+      - key: STORAGE_CONFIG
+        sync: false
+      - key: SECRET
+        sync: false
+      - key: ACCOUNTS_URL
+        value: https://huly-account.onrender.com
+      - key: DB_URL
+        sync: false
+      - key: MONGO_URL
+        sync: false
+      - key: STORAGE_PROVIDER_NAME
+        value: minio
+      - key: PORT
+        value: 8096
+      - key: LIVEKIT_HOST
+        sync: false
+      - key: LIVEKIT_API_KEY
+        sync: false
+      - key: LIVEKIT_API_SECRET
+        sync: false
+
+  - type: web
+    name: huly-aibot
+    runtime: image
+    image:
+      url: docker.io/hardcoreeng/ai-bot:v0.6.501
+    plan: free
+    envVars:
+      - key: STORAGE_CONFIG
+        sync: false
+      - key: SERVER_SECRET
+        sync: false
+      - key: ACCOUNTS_URL
+        value: https://huly-account.onrender.com
+      - key: DB_URL
+        sync: false
+      - key: MONGO_URL
+        sync: false
+      - key: STATS_URL
+        value: https://huly-stats.onrender.com
+      - key: FIRST_NAME
+        value: Bot
+      - key: LAST_NAME
+        value: Huly AI
+      - key: PASSWORD
+        sync: false
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: OPENAI_BASE_URL
+        sync: false
+      - key: LOVE_ENDPOINT
+        value: https://huly-love.onrender.com 
