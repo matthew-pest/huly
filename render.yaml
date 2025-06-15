@@ -257,7 +257,7 @@ services:
     runtime: image
     image:
       url: docker.io/hardcoreeng/workspace:v0.6.501
-    plan: free
+    plan: starter
     envVars:
       - key: SERVER_SECRET
         sync: false
