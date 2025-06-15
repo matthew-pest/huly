@@ -1,0 +1,9 @@
+letsencrypt/
+traefik/docker-compose.yaml
+nginx.conf
+nginx.conf.bak
+huly.conf
+.huly.secret
+.idea
+.env
+.env.local
