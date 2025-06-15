@@ -22,13 +22,21 @@ services:
         value: minioadmin
       - key: MINIO_ROOT_PASSWORD
         value: minioadmin
+      - key: MINIO_SERVER_PORT
+        value: "9000"
+      - key: MINIO_CONSOLE_PORT
+        value: "9001"
+      - key: MINIO_SERVER_URL
+        value: "http://localhost:9000"
+      - key: MINIO_CONSOLE_URL
+        value: "http://localhost:9001"
 
   - type: web
     name: huly-elastic
     runtime: image
     image:
       url: docker.io/library/elasticsearch:7.14.2
-    plan: free
+    plan: starter
     envVars:
       - key: ELASTICSEARCH_PORT_NUMBER
         value: "9200"
