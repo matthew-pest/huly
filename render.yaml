@@ -263,9 +263,9 @@ services:
       - key: SERVER_SECRET
         sync: false
       - key: DB_URL
-        sync: false
+        value: mongodb+srv://${MONGODB_USER}:${MONGODB_PASSWORD}@huly.tlrg443.mongodb.net/?retryWrites=true&w=majority
       - key: MONGO_URL
-        sync: false
+        value: mongodb+srv://${MONGODB_USER}:${MONGODB_PASSWORD}@huly.tlrg443.mongodb.net/?retryWrites=true&w=majority
       - key: TRANSACTOR_URL
         value: wss://huly-transactor.onrender.com
       - key: STORAGE_CONFIG
