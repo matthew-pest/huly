@@ -1,0 +1,160 @@
+services:
+  - type: web
+    name: huly-front
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    plan: free
+    envVars:
+      - key: SERVER_PORT
+        value: 80
+      - key: SERVER_SECRET
+        sync: false
+      - key: ACCOUNTS_URL
+        value: https://huly-account.onrender.com
+      - key: REKONI_URL
+        value: https://huly-rekoni.onrender.com
+      - key: STATS_URL
+        value: https://huly-stats.onrender.com
+      - key: UPLOAD_URL
+        value: /files
+      - key: COLLABORATOR_URL
+        value: wss://huly-collaborator.onrender.com
+      - key: TITLE
+        value: Huly Self Host
+      - key: DEFAULT_LANGUAGE
+        value: en
+      - key: LAST_NAME_FIRST
+        value: "false"
+      - key: DESKTOP_UPDATES_CHANNEL
+        value: selfhost
+
+  - type: web
+    name: huly-account
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    plan: free
+    envVars:
+      - key: SERVER_PORT
+        value: 3000
+      - key: SERVER_SECRET
+        sync: false
+      - key: DB_URL
+        sync: false
+      - key: MONGO_URL
+        sync: false
+      - key: TRANSACTOR_URL
+        value: wss://huly-transactor.onrender.com
+      - key: STORAGE_CONFIG
+        sync: false
+      - key: FRONT_URL
+        value: https://huly-front.onrender.com
+      - key: STATS_URL
+        value: https://huly-stats.onrender.com
+      - key: MODEL_ENABLED
+        value: "*"
+      - key: MAIL_URL
+        value: https://huly-mail.onrender.com
+
+  - type: web
+    name: huly-transactor
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    plan: free
+    envVars:
+      - key: SERVER_PORT
+        value: 3333
+      - key: SERVER_SECRET
+        sync: false
+      - key: DB_URL
+        sync: false
+      - key: MONGO_URL
+        sync: false
+      - key: STORAGE_CONFIG
+        sync: false
+      - key: FRONT_URL
+        value: https://huly-front.onrender.com
+      - key: ACCOUNTS_URL
+        value: https://huly-account.onrender.com
+      - key: FULLTEXT_URL
+        value: https://huly-fulltext.onrender.com
+      - key: STATS_URL
+        value: https://huly-stats.onrender.com
+
+  - type: web
+    name: huly-collaborator
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    plan: free
+    envVars:
+      - key: COLLABORATOR_PORT
+        value: 3078
+      - key: SECRET
+        sync: false
+      - key: ACCOUNTS_URL
+        value: https://huly-account.onrender.com
+      - key: DB_URL
+        sync: false
+      - key: STATS_URL
+        value: https://huly-stats.onrender.com
+      - key: STORAGE_CONFIG
+        sync: false
+
+  - type: web
+    name: huly-stats
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    plan: free
+    envVars:
+      - key: PORT
+        value: 4900
+      - key: SERVER_SECRET
+        sync: false
+
+  - type: web
+    name: huly-fulltext
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    plan: free
+    envVars:
+      - key: SERVER_SECRET
+        sync: false
+      - key: DB_URL
+        sync: false
+      - key: FULLTEXT_DB_URL
+        sync: false
+      - key: ELASTIC_INDEX_NAME
+        value: huly_storage_index
+      - key: STORAGE_CONFIG
+        sync: false
+      - key: REKONI_URL
+        value: https://huly-rekoni.onrender.com
+      - key: ACCOUNTS_URL
+        value: https://huly-account.onrender.com
+      - key: STATS_URL
+        value: https://huly-stats.onrender.com
+
+  - type: web
+    name: huly-rekoni
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    plan: free
+    envVars:
+      - key: SECRET
+        sync: false
+
+  - type: web
+    name: huly-mail
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    plan: free
+    envVars:
+      - key: PORT
+        value: 8097
+      - key: SOURCE
+        sync: false
+      - key: SES_ACCESS_KEY
+        sync: false
+      - key: SES_SECRET_KEY
+        sync: false
+      - key: SES_REGION
+        sync: false 
