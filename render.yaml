@@ -13,24 +13,28 @@ services:
 
   - type: web
     name: huly-minio
+    healthCheckPath: /minio/health/live
     runtime: image
     image:
-      url: docker.io/minio/minio
-    plan: starter
-    startCommand: server /data --address ":9000" --console-address ":9001"
+      url: docker.io/minio/minio:latest
+    dockerCommand: minio server /data --address $HOST:$PORT
+    autoDeploy: false
+    disk:
+      name: data
+      mountPath: /data
     envVars:
-      - key: MINIO_ROOT_USER
-        value: minioadmin
-      - key: MINIO_ROOT_PASSWORD
-        value: minioadmin
-      - key: MINIO_SERVER_PORT
-        value: "9000"
-      - key: MINIO_CONSOLE_PORT
-        value: "9001"
-      - key: MINIO_SERVER_URL
-        value: "http://localhost:9000"
-      - key: MINIO_CONSOLE_URL
-        value: "http://localhost:9001"
+    - key: MINIO_ROOT_USER
+      generateValue: true
+    - key: MINIO_ROOT_PASSWORD
+      generateValue: true
+    - key: HOST
+      value: "0.0.0.0"
+    - key: PORT
+      value: 9000
+    - key: CONSOLE_PORT
+      value: 9090
+    - key: MINIO_BROWSER
+      value: "off"
 
   - type: web
     name: huly-elastic
@@ -253,6 +257,8 @@ services:
         value: https://huly-account.onrender.com
       - key: STATS_URL
         value: https://huly-stats.onrender.com
+      - key: PORT
+        value: "3001"
 
   - type: web
     name: huly-love
