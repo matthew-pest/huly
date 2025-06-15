@@ -2,7 +2,8 @@ services:
   - type: web
     name: huly-front
     runtime: docker
-    dockerfilePath: ./Dockerfile
+    image:
+      url: hardcoreeng/front:v0.6.501
     plan: free
     envVars:
       - key: SERVER_PORT
@@ -24,14 +25,15 @@ services:
       - key: DEFAULT_LANGUAGE
         value: en
       - key: LAST_NAME_FIRST
-        value: "false"
+        value: "true"
       - key: DESKTOP_UPDATES_CHANNEL
         value: selfhost
 
   - type: web
     name: huly-account
     runtime: docker
-    dockerfilePath: ./Dockerfile
+    image:
+      url: hardcoreeng/account:v0.6.501
     plan: free
     envVars:
       - key: SERVER_PORT
@@ -58,7 +60,8 @@ services:
   - type: web
     name: huly-transactor
     runtime: docker
-    dockerfilePath: ./Dockerfile
+    image:
+      url: hardcoreeng/transactor:v0.6.501
     plan: free
     envVars:
       - key: SERVER_PORT
@@ -83,7 +86,8 @@ services:
   - type: web
     name: huly-collaborator
     runtime: docker
-    dockerfilePath: ./Dockerfile
+    image:
+      url: hardcoreeng/collaborator:v0.6.501
     plan: free
     envVars:
       - key: COLLABORATOR_PORT
@@ -102,7 +106,8 @@ services:
   - type: web
     name: huly-stats
     runtime: docker
-    dockerfilePath: ./Dockerfile
+    image:
+      url: hardcoreeng/stats:v0.6.501
     plan: free
     envVars:
       - key: PORT
@@ -113,7 +118,8 @@ services:
   - type: web
     name: huly-fulltext
     runtime: docker
-    dockerfilePath: ./Dockerfile
+    image:
+      url: hardcoreeng/fulltext:v0.6.501
     plan: free
     envVars:
       - key: SERVER_SECRET
@@ -136,7 +142,8 @@ services:
   - type: web
     name: huly-rekoni
     runtime: docker
-    dockerfilePath: ./Dockerfile
+    image:
+      url: hardcoreeng/rekoni-service:v0.6.501
     plan: free
     envVars:
       - key: SECRET
@@ -145,7 +152,8 @@ services:
   - type: web
     name: huly-mail
     runtime: docker
-    dockerfilePath: ./Dockerfile
+    image:
+      url: hardcoreeng/mail:v0.6.501
     plan: free
     envVars:
       - key: PORT
