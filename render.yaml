@@ -258,14 +258,13 @@ services:
     image:
       url: docker.io/hardcoreeng/workspace:v0.6.501
     plan: free
-    healthCheckPath: /health
     envVars:
       - key: SERVER_SECRET
         sync: false
       - key: DB_URL
-        value: mongodb+srv://${MONGODB_USER}:${MONGODB_PASSWORD}@huly.tlrg443.mongodb.net/?retryWrites=true&w=majority
+        sync: false
       - key: MONGO_URL
-        value: mongodb+srv://${MONGODB_USER}:${MONGODB_PASSWORD}@huly.tlrg443.mongodb.net/?retryWrites=true&w=majority
+        sync: false
       - key: TRANSACTOR_URL
         value: wss://huly-transactor.onrender.com
       - key: STORAGE_CONFIG
