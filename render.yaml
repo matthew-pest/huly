@@ -258,6 +258,7 @@ services:
     image:
       url: docker.io/hardcoreeng/workspace:v0.6.501
     plan: free
+    healthCheckPath: /health
     envVars:
       - key: SERVER_SECRET
         sync: false
@@ -277,6 +278,8 @@ services:
         value: https://huly-stats.onrender.com
       - key: PORT
         value: "3001"
+      - key: HOST
+        value: "0.0.0.0"
 
   - type: web
     name: huly-love
