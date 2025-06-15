@@ -17,6 +17,7 @@ services:
     image:
       url: docker.io/minio/minio
     plan: free
+    startCommand: server /data --address ":9000" --console-address ":9001"
     envVars:
       - key: MINIO_ROOT_USER
         value: minioadmin
@@ -36,7 +37,7 @@ services:
     runtime: image
     image:
       url: docker.io/library/elasticsearch:7.14.2
-    plan: starter
+    plan: standard
     envVars:
       - key: ELASTICSEARCH_PORT_NUMBER
         value: "9200"
