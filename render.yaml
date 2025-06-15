@@ -12,18 +12,6 @@ services:
         value: 80
 
   - type: web
-    name: huly-mongodb
-    runtime: image
-    image:
-      url: docker.io/library/mongo:7-jammy
-    plan: free
-    envVars:
-      - key: PUID
-        value: "1000"
-      - key: PGID
-        value: "1000"
-
-  - type: web
     name: huly-minio
     runtime: image
     image:
@@ -81,7 +69,7 @@ services:
       - key: DEFAULT_LANGUAGE
         value: en
       - key: LAST_NAME_FIRST
-        value: "true"
+        value: "false"
       - key: DESKTOP_UPDATES_CHANNEL
         value: selfhost
       - key: LIVEKIT_WS
