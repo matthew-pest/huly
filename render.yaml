@@ -3,7 +3,7 @@ services:
     name: huly-nginx
     runtime: image
     image:
-      url: docker.io/nginx:1.21.3
+      url: docker.io/library/nginx:1.21.3
     plan: free
     envVars:
       - key: HTTP_BIND
@@ -15,7 +15,7 @@ services:
     name: huly-mongodb
     runtime: image
     image:
-      url: docker.io/mongo:7-jammy
+      url: docker.io/library/mongo:7-jammy
     plan: free
     envVars:
       - key: PUID
@@ -39,7 +39,7 @@ services:
     name: huly-elastic
     runtime: image
     image:
-      url: docker.io/elasticsearch:7.14.2
+      url: docker.io/library/elasticsearch:7.14.2
     plan: free
     envVars:
       - key: ELASTICSEARCH_PORT_NUMBER
