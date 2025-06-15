@@ -91,6 +91,24 @@ services:
         value: https://huly-love.onrender.com
       - key: AI_URL
         value: https://huly-aibot.onrender.com
+      - key: GMAIL_URL
+        value: https://huly-front.onrender.com/_gmail
+      - key: CALENDAR_URL
+        value: https://huly-front.onrender.com/_calendar
+      - key: TELEGRAM_URL
+        value: https://huly-front.onrender.com/_telegram
+      - key: ELASTIC_URL
+        value: https://huly-elastic.onrender.com
+      - key: STORAGE_CONFIG
+        value: minio|minio?accessKey=minioadmin&secretKey=minioadmin
+      - key: DB_URL
+        sync: false
+      - key: MONGO_URL
+        sync: false
+      - key: PUSH_PUBLIC_KEY
+        value: BCS4xddQoWP9F74HmidSEsSJ4Tn7d0cbk8q9sgtNTpDsQmtMMLIqF
+      - key: PUSH_PRIVATE_KEY
+        value: X8xQIr3ZmjJCPDeZ6ScrXkT54qJx5tqZnZzXwVog07A
 
   - type: web
     name: huly-account
